@@ -24,13 +24,13 @@ def get_papers_core_api(query, limit, offset=0):
     if response.status_code == 200:
         data = response.json()
         
-        for item in data['results']:
-            language_code = item.get('language', {}).get('code') if item.get('language') else None
+        for paper in data['results']:
+            language_code = paper.get('language', {}).get('code') if paper.get('language') else None
             if language_code == 'en':
-                title = item.get('title', '')
-                authors = [author['name'] for author in item.get('authors', [])]
-                pdf_link = item.get('downloadUrl', '')
-                full_text = item.get('fullText', '')
+                title = paper.get('title', '')
+                authors = [author['name'] for author in paper.get('authors', [])]
+                pdf_link = paper.get('downloadUrl', '')
+                full_text = paper.get('fullText', '')
                 
                 result.append({
                     'title': title,
@@ -50,15 +50,15 @@ def save_core_results_as_text(results):
     if not os.path.exists(results_dir):
         os.makedirs(results_dir)
     
-    for item in results:
-        first_author_name = item['authors'][0] if item['authors'] else 'Unknown'
-        file_name = f"{item['title']} by {first_author_name}.txt"
+    for paper in results:
+        first_author_name = paper['authors'][0] if paper['authors'] else 'Unknown'
+        file_name = f"{paper['title']} by {first_author_name}.txt"
         file_name_safe = clean_file_name(file_name)
         
         full_path = os.path.join(results_dir, file_name_safe)
         
         with open(full_path, 'w', encoding='utf-8') as file:
-            file.write(item['full_text'])
+            file.write(paper['full_text'])
 
 def clean_file_name(filename):
     invalid_chars = ['<', '>', ':', '"', '/', '\\', '|', '?', '*', '\n']

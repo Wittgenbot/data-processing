@@ -22,7 +22,33 @@ def remove_string_from_txt_files(input_folder, pattern_to_remove):
 
             print(f"String removed from {filename}")
 
+
+def remove_citations_from_txt_files(input_folder):
+    if not os.path.exists(input_folder):
+        print(f"Error: The input folder '{input_folder}' does not exist.")
+        return
+
+    for filename in os.listdir(input_folder):
+        if filename.endswith(".txt"):
+            txt_path = os.path.join(input_folder, filename)
+
+            with open(txt_path, 'r', encoding='utf-8') as txt_file:
+                content = txt_file.read()
+
+            match = re.search(r'(References|Bibliography|Works cited|Works Cited)', content)
+
+            if match:
+                modified_content = content[:match.start()]
+
+                with open(txt_path, 'w', encoding='utf-8') as txt_file:
+                    txt_file.write(modified_content)
+
+                print(f"Citations removed from {filename}")
+
+
 input_folder = os.getenv('pdfs_as_txts')
 pattern_to_remove = r"This content downloaded from[\s\S]*?All use subject to https://about.jstor.org/terms"
 
 remove_string_from_txt_files(input_folder, pattern_to_remove)
+
+remove_citations_from_txt_files(input_folder)

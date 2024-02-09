@@ -10,6 +10,5 @@ pdf_names = get_pdf_names(pdf_folder)
 
 print("PDF files in the folder:")
 for pdf_name in pdf_names:
-    #print(pdf_name)
     print(f"delete_custom_pages(\"{pdf_name}\", 1, -1)")
 
