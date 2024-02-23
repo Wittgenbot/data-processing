@@ -32,6 +32,7 @@ def clean_test_results_txts(input_folder_path, output_folder_path):
                     outfile.write("QUESTION: " + question.strip() + "\n")
                     outfile.write("ANSWER: " + answer.strip() + "\n")
                     outfile.write("INFERENCE_TIME: " + time.strip() + " seconds\n")
+                    outfile.write("SCORE: /10\n")
                     outfile.write("\n\n")
 
 input_folder_path = './model_test_results_precleaned'
