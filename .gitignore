@@ -2,3 +2,6 @@ venv/
 PDFs/
 .env
 core_api_results/
+data/
+model_test_results_cleaned/
+model_test_results_precleaned/
